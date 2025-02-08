@@ -1,0 +1,22 @@
+{
+  "name": "midterm-project",
+  "version": "1.0.0",
+  "main": "script.js",
+  "scripts": {
+    "serve": "node script.js",
+    "dev": "nodemon script.js"
+  },
+  "keywords": [],
+  "author": "Elijah Suyat",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mongodb": "^6.13.0",
+    "mongoose": "^8.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
