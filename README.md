@@ -91,30 +91,7 @@ Defines the user schema and pre-save hook to hash passwords before saving.
 
 Defines the note schema.
 
-### `public/index.html`
-
-Contains the HTML structure for the registration, login, and notes app.
-
-### `public/index.js`
-
-Contains the client-side JavaScript for handling user registration, login, and note management.
-
-### [script.js](http://_vscodecontentref_/5)
-
-Contains the server-side code for handling user registration, login, and note management.
-
-## API Endpoints
-
-### User Registration
-
-- **URL:** `/register`
-- **Method:** `POST`
-- **Body:**
-  ```json
-  {
-    "username": "string",
-    "password": "string"
-  }
+GO TO FRONTEND
 
   
 
