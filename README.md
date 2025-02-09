@@ -8,7 +8,6 @@ This project primarily focuses on extracting and storing data efficiently. While
 
 This part of the code is only the BACKEND part of the project.
 
-Inorder to execute it you would need to go the FRONTEND part of the code.
 
 ## Features
 
@@ -90,6 +89,10 @@ Defines the user schema and pre-save hook to hash passwords before saving.
 ### [notemodel.js](http://_vscodecontentref_/4)
 
 Defines the note schema.
+
+## RUN BACKEND SERVER
+
+Run backend by using "npm run dev"
 
 GO TO FRONTEND
 
