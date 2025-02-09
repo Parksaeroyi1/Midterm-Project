@@ -80,5 +80,45 @@ Inorder to execute it you would need to go the FRONTEND part of the code.
 3. To delete a note, click the "×" button next to the note.
 
 ## File Structure
+. ├── Model │ ├── notemodel.js │ └── usermodel.js ├── public │ ├── index.html │ └── index.js ├── .env ├── package.json └── script.js
+
+
+### [usermodel.js](http://_vscodecontentref_/3)
+
+Defines the user schema and pre-save hook to hash passwords before saving.
+
+### [notemodel.js](http://_vscodecontentref_/4)
+
+Defines the note schema.
+
+### `public/index.html`
+
+Contains the HTML structure for the registration, login, and notes app.
+
+### `public/index.js`
+
+Contains the client-side JavaScript for handling user registration, login, and note management.
+
+### [script.js](http://_vscodecontentref_/5)
+
+Contains the server-side code for handling user registration, login, and note management.
+
+## API Endpoints
+
+### User Registration
+
+- **URL:** `/register`
+- **Method:** `POST`
+- **Body:**
+  ```json
+  {
+    "username": "string",
+    "password": "string"
+  }
+
+  
+
+
+
 
 
