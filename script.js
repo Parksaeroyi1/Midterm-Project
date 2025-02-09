@@ -16,6 +16,7 @@ app.post('/register', async (req, res) => {
     try {
         const { username, password } = req.body;
         const user = await User.create({ username, password });
+        console.log(`User ${username} registered successfully`);
         res.status(201).json(user);
     } catch (error) {
         console.log(error.message);
@@ -52,6 +53,7 @@ app.post('/login', async (req, res) => {
 app.post('/notes', async (req, res) => {
     try {
         const note = await Note.create({ ...req.body, userId: req.userId, createdBy: req.username, lastEditedBy: req.username });
+        console.log(`Note created successfully at ${note.createdAt}`);
         res.status(200).json(note);
     } catch (error) {
         console.log(error.message);
