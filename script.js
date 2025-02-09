@@ -71,24 +71,27 @@ app.post('/notesbyuser', async (req, res) => {
     }
 });
 
-// Update note
 app.put('/notes/:id', async (req, res) => {
     try {
-        const note = await Note.findOneAndUpdate(
-            { _id: req.params.id },
-            { ...req.body, lastEditedBy: req.username },
-            { new: true }
-        );
-        if (!note) {
-            return res.status(404).json({ message: 'Note not found' });
-        }
-        console.log(`Note with id ${req.params.id} updated successfully`);
-        res.status(200).json(note);
+      const note = await Note.findOneAndUpdate(
+        { _id: req.params.id },
+        { 
+          ...req.body, 
+          lastEditedBy: req.username,
+          updatedAt: new Date()
+        },
+        { new: true }
+      );
+      if (!note) {
+        return res.status(404).json({ message: 'Note not found' });
+      }
+      console.log(`Note with id ${req.params.id} updated successfully at ${note.updatedAt}`);
+      res.status(200).json(note);
     } catch (error) {
-        console.log(error.message);
-        res.status(500).json({ message: error.message });
+      console.log(error.message);
+      res.status(500).json({ message: error.message });
     }
-});
+  });
 
 // Delete note
 app.delete('/notes/:id', async (req, res) => {
