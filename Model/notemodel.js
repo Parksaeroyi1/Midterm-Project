@@ -7,6 +7,9 @@ const notesSchema = mongoose.Schema(
     },
     description: {
         type: String,
+    },
+    usernameID: {
+        type: String,
     }
 },
     {

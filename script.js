@@ -3,15 +3,55 @@ const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
 const Note = require('./Model/notemodel');
+const User = require('./Model/usermodel');
 const PORT = 8000;
 
 app.use(express.json());
 app.use(cors());
 
-app.post('/notes', async (req, res) => {
-    console.log("trigger notes", req.body);
+
+
+// User registration
+app.post('/register', async (req, res) => {
     try {
-        const note = await Note.create(req.body);
+        const { username, password } = req.body;
+        const user = await User.create({ username, password });
+        res.status(201).json(user);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// User login
+app.post('/login', async (req, res) => {
+    try {
+        const { username, password} = req.body;
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid username or password' });
+        }
+        const match = password === user.password;
+        console.log(password, user.password);
+        console.log(match);
+        if(match) {
+            console.log("User logged in successfully");
+            res.status(200).json(user);
+            
+        }
+        
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+
+// Add note
+app.post('/notes', async (req, res) => {
+    try {
+        const note = await Note.create({ ...req.body, userId: req.userId, createdBy: req.username, lastEditedBy: req.username });
         res.status(200).json(note);
     } catch (error) {
         console.log(error.message);
@@ -19,9 +59,11 @@ app.post('/notes', async (req, res) => {
     }
 });
 
-app.get('/notes', async (req, res) => {
+// Get notes by user
+app.post('/notesbyuser', async (req, res) => {
     try {
-        const notes = await Note.find({});
+        const usernameID = req.body;
+        const notes = await Note.find({ usernameID: { $eq: req.body.usernameID } });
         res.status(200).json(notes);
     } catch (error) {
         console.log(error.message);
@@ -29,9 +71,14 @@ app.get('/notes', async (req, res) => {
     }
 });
 
+// Update note
 app.put('/notes/:id', async (req, res) => {
     try {
-        const note = await Note.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const note = await Note.findOneAndUpdate(
+            { _id: req.params.id },
+            { ...req.body, lastEditedBy: req.username },
+            { new: true }
+        );
         if (!note) {
             return res.status(404).json({ message: 'Note not found' });
         }
@@ -43,9 +90,10 @@ app.put('/notes/:id', async (req, res) => {
     }
 });
 
+// Delete note
 app.delete('/notes/:id', async (req, res) => {
     try {
-        const note = await Note.findByIdAndDelete(req.params.id);
+        const note = await Note.findOneAndDelete({ _id: req.params.id });
         if (!note) {
             return res.status(404).json({ message: 'Note not found' });
         }
